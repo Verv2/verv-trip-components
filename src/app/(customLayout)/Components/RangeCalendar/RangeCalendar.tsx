@@ -167,15 +167,25 @@ const RangeCalendar = ({ className }: HTMLAttributes<HTMLDivElement>) => {
                   }}
                 />
               </div>
-              <div className="mt-4 flex justify-end">
-                <Button onClick={() => setOpen(false)}>Done</Button>
+              <div className="mt-4 w-full">
+                <Button
+                  onClick={() => setOpen(false)}
+                  className="w-full bg-blue-600"
+                >
+                  Done
+                </Button>
               </div>
             </TabsContent>
 
-            <TabsContent value="flexible" className="p-4 space-y-4">
+            <TabsContent
+              value="flexible"
+              className="p-4 space-y-4 lg:w-[500px]"
+            >
               <div>
-                <h3 className="text-sm font-medium mb-2">Select Month</h3>
-                <div className="grid grid-cols-3 gap-2">
+                <h3 className="text-sm font-medium mb-3">
+                  When would you like to travel?
+                </h3>
+                <div className="grid grid-cols-3 gap-2 rounded-lg shadow-[0px_4px_6px_0px_rgba(0,_0,_0,_0.1)] p-2">
                   {months.map((month, index) => (
                     <Button
                       key={index}
@@ -186,7 +196,12 @@ const RangeCalendar = ({ className }: HTMLAttributes<HTMLDivElement>) => {
                           : "outline"
                       }
                       onClick={() => setSelectedMonth(month)}
-                      className="h-auto py-2"
+                      className={cn(
+                        "h-auto py-2",
+                        selectedMonth.getMonth() === month.getMonth() &&
+                          selectedMonth.getFullYear() === month.getFullYear() &&
+                          "bg-blue-600 text-white"
+                      )}
                     >
                       {format(month, "MMM yyyy")}
                     </Button>
@@ -195,31 +210,50 @@ const RangeCalendar = ({ className }: HTMLAttributes<HTMLDivElement>) => {
               </div>
 
               <div>
-                <h3 className="text-sm font-medium mb-2">Select Duration</h3>
+                <h3 className="text-sm font-medium mb-3">
+                  How long would you like to stay?
+                </h3>
                 <RadioGroup
                   value={selectedDuration}
                   onValueChange={(value) =>
                     setSelectedDuration(value as DurationType)
                   }
-                  className="flex flex-col space-y-2"
+                  className="flex flex-col lg:flex-row lg:justify-between rounded-lg shadow-[0px_4px_6px_0px_rgba(0,_0,_0,_0.1)] p-2"
                 >
                   <div className="flex items-center space-x-2">
-                    <RadioGroupItem value="weekend" id="weekend" />
+                    <RadioGroupItem
+                      value="weekend"
+                      id="weekend"
+                      className="border-2 border-gray-500 data-[state=checked]:border-blue-600"
+                    />
                     <Label htmlFor="weekend">Weekend (1-3 nights)</Label>
                   </div>
                   <div className="flex items-center space-x-2">
-                    <RadioGroupItem value="1week" id="1week" />
+                    <RadioGroupItem
+                      value="1week"
+                      id="1week"
+                      className="border-2 border-gray-500 data-[state=checked]:border-blue-600"
+                    />
                     <Label htmlFor="1week">1 Week</Label>
                   </div>
                   <div className="flex items-center space-x-2">
-                    <RadioGroupItem value="2weeks" id="2weeks" />
+                    <RadioGroupItem
+                      value="2weeks"
+                      id="2weeks"
+                      className="border-2 border-gray-500 data-[state=checked]:border-blue-600"
+                    />
                     <Label htmlFor="2weeks">2 Weeks</Label>
                   </div>
                 </RadioGroup>
               </div>
 
-              <div className="mt-4 flex justify-end">
-                <Button onClick={handleFlexibleDateSelection}>Done</Button>
+              <div className="mt-4 w-full">
+                <Button
+                  onClick={handleFlexibleDateSelection}
+                  className="w-full bg-blue-500"
+                >
+                  Done
+                </Button>
               </div>
             </TabsContent>
           </Tabs>
